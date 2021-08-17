@@ -13,7 +13,8 @@ typedef struct{
 
 void show_wait_list() {
     int is_empty;
-    printf("Clientes em espera:\n");
+    printf("\nClientes em espera:\n");
+    printf("---------------------\n");
     for(int i=0; i<wait_list_size; i++){
         is_empty = clients_waiting[i]==0 ? 1 : 0;
         if(is_empty==1){
@@ -22,7 +23,7 @@ void show_wait_list() {
             printf("Slot [%i] - Cliente %i\n", i, clients_waiting[i]);
         }
     }
-    printf("\n-------------------------------------------------------\n");
+    printf("-------------------------------------------------------\n");
 }
 
 void * try_to_connect(void *args){
@@ -76,6 +77,10 @@ int main(int argc, char **argv) {
         printf("Ex.: ./<file-name> 5\n");
         exit(0);
     }
+    printf("\n-------------------------------------------------------\n");
+    printf("\n               Rede Wi-Fi do shopping XYZ              \n");
+    printf("\n- Maximo de solicitacoes em espera: %i\n", wait_list_size);
+    printf("\n-------------------------------------------------------\n");
     clients_waiting = (int*)malloc(wait_list_size * sizeof(int));
     sem_init(&sem_wait_list, 0, wait_list_size);
     sem_init(&sem_connect, 0, 1);
@@ -92,5 +97,4 @@ int main(int argc, char **argv) {
     sem_destroy(&sem_wait_list);
     sem_destroy(&sem_connect);
     free(clients_waiting);
-    
 }
